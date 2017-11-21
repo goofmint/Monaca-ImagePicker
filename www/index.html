@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <script src="lib/onsenui/js/onsenui.min.js"></script>
+
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script>
+    ons.ready(function() {
+      console.log("Onsen UI is ready!");
+      
+      let picker = document.getElementById('picker');
+      picker.addEventListener('click', function(e) {
+        imagePicker.getPictures(function(results) {
+          let images = document.getElementById('images');
+          for (let i = 0; i < results.length; i += 1) {
+            console.log('Image URI: ' + results[i]);
+            let image = new Image;
+            image.src = results[i];
+            image.width = 200;
+            images.appendChild(image);
+          }
+        }, function (error) {
+          console.log('Error: ' + error);
+        }, {
+          maximumImagesCount: 10,
+          width: 200
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <ons-page>
+    <ons-button id="picker">画像選択</ons-button>
+    <div id="images">
+    </div>
+  </ons-page>
+</body>
+</html>
